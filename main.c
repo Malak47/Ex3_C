@@ -35,7 +35,7 @@ int findMeTheValueOfTheString(char str[]) {
 
 void cleanUpString(char string[]) {
     int strLen = strlen(string);
-    strncpy(string,"",strlen(string));
+    strncpy(string, "", strlen(string));
 }
 
 char GematriaSequences(char word[], char txt[]) {
@@ -43,42 +43,48 @@ char GematriaSequences(char word[], char txt[]) {
     int txtLen = strlen(txt);
     char result[txtLen];
     char saveString[txtLen];
-    memset(result,0, sizeof(result));
-    memset(saveString,0, sizeof(saveString));
+    memset(result, 0, sizeof(result));
+    memset(saveString, 0, sizeof(saveString));
     //cleanUpString(result);
     //cleanUpString(saveString);
-    int count = 0;
-    int savei = 0;
-    for (int i = 0; i < txtLen; i++) {
-        if ('a' <= txt[i] && txt[i] <= 'z') {
-            count += (int) (txt[i]) - 96;
-            strncat(saveString, &txt[i], 1);
+    int count = 0;                     //012345678911234567892123456
+    for (int i = 0; i < txtLen; i++) { //a-bc,dbca-zwxyzabzyxw0dcba~
+        memset(saveString, 0, sizeof(saveString));
+        for (int k = i; k < txtLen; k++) {
+            if ('a' <= txt[k] && txt[k] <= 'z') {
+                count += (int) (txt[k]) - 96;
+                strncat(saveString, &txt[k], 1);
 
-        } else if ('A' <= txt[i] && txt[i] <= 'Z') {
-            count += (int) (txt[i]) - 64;
-            strncat(saveString, &txt[i], 1);
-        } else {
-            continue;
-        }
-        if (count == sumOfWord) {
-            int saveStringLen = strlen(saveString);
-            for (int j = 0; j < saveStringLen; j++) {
-                strncat(result, &saveString[j], 1);
-                if (&saveString[j] == 0) {
-                    break;
-                }
+            } else if ('A' <= txt[k] && txt[k] <= 'Z') {
+                count += (int) (txt[k]) - 64;
+                strncat(saveString, &txt[k], 1);
+            } else if (count != 0) {
+                strncat(saveString, &txt[k], 1);
+                continue;
+            } else {
+                i++;
+                k = i - 1;
+                memset(saveString, 0, sizeof(saveString));
             }
-            //cleanUpString(saveString);
-            memset(saveString,0, sizeof(saveString));
-            count = 0;
-            savei++;
-            i = savei;
-        } else if (count > sumOfWord) {
-            //cleanUpString(saveString);
-            memset(saveString,0, sizeof(saveString));
-            count = 0;
-            savei++;
-            i = savei;
+            if (count == sumOfWord) {
+                int saveStringLen = strlen(saveString);
+                for (int j = 0; j < saveStringLen; j++) {
+                    strncat(result, &saveString[j], 1);
+                }
+
+                //cleanUpString(saveString);
+                memset(saveString, 0, sizeof(saveString));
+                count = 0;
+                strncat(result, "~", 1);
+                i++;
+                k = i - 1;
+            } else if (count > sumOfWord) {
+                //cleanUpString(saveString);
+                memset(saveString, 0, sizeof(saveString));
+                count = 0;
+                i++;
+                k = i - 1;
+            }
         }
     }
     return result;
@@ -89,6 +95,8 @@ int main() {
 //    printf("%d", findMeTheValueOfTheString("aaaaaa a, - % 0 a"));
     char word[] = "abcd";
     char txt[] = "a-bc,dbca-zwxyzabzyxw0dcba~";
-    printf("%s%s", GematriaSequences(word, txt));
+
+    printf("%s", GematriaSequences(word, txt));
+
     return 0;
 }
