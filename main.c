@@ -43,8 +43,10 @@ char GematriaSequences(char word[], char txt[]) {
     int txtLen = strlen(txt);
     char result[txtLen];
     char saveString[txtLen];
-    cleanUpString(result);
-    cleanUpString(saveString);
+    memset(result,0, sizeof(result));
+    memset(saveString,0, sizeof(saveString));
+    //cleanUpString(result);
+    //cleanUpString(saveString);
     int count = 0;
     int savei = 0;
     for (int i = 0; i < txtLen; i++) {
@@ -66,12 +68,14 @@ char GematriaSequences(char word[], char txt[]) {
                     break;
                 }
             }
-            cleanUpString(saveString);
+            //cleanUpString(saveString);
+            memset(saveString,0, sizeof(saveString));
             count = 0;
             savei++;
             i = savei;
         } else if (count > sumOfWord) {
-            cleanUpString(saveString);
+            //cleanUpString(saveString);
+            memset(saveString,0, sizeof(saveString));
             count = 0;
             savei++;
             i = savei;
