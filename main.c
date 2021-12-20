@@ -1,10 +1,12 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <ctype.h>
 
 #define TXT 1024
 #define WORD 30
 
+//------------------------------Q1--------------------------------------
 int findMeTheValueOfTheChar(char c) {
     int result = 0;
     if ('a' <= c && c <= 'z') {
@@ -33,11 +35,6 @@ int findMeTheValueOfTheString(char str[]) {
     return result;
 }
 
-void cleanUpString(char string[]) {
-    int strLen = strlen(string);
-    strncpy(string, "", strlen(string));
-}
-
 char *GematriaSequences(char *word, char *txt) {
     int sumOfWord = findMeTheValueOfTheString(word);
     int txtLen = strlen(txt);
@@ -53,7 +50,7 @@ char *GematriaSequences(char *word, char *txt) {
         memset(saveString, 0, sizeof(saveString));
         for (int k = i; k < txtLen; k++) {
             if (txt[k] == '~') {
-                i=txtLen-1;
+                i = txtLen - 1;
                 break;
             }
             if ('a' <= txt[k] && txt[k] <= 'z') {
@@ -94,12 +91,110 @@ char *GematriaSequences(char *word, char *txt) {
             }
         }
     }
-//    char * thisIsThePointer = result;
-//    return thisIsThePointer ;
-    result[MC-1] = '\0';
+    result[MC - 1] = '\0';
+    return result;
+}
+//------------------------------Q1--------------------------------------
+
+
+//------------------------------Q2--------------------------------------
+char reverseChar(char ch) {
+    char ans = ch;
+    if ('a' <= ch && ch <= 'z' || 'A' <= ch && ch <= 'Z') {
+        int temp = findMeTheValueOfTheChar(ch);
+        temp = 26 - temp + 1;
+        if ('A' <= ch && ch <= 'Z') {
+            ans = ((char) temp + 64);
+        } else {
+            ans = ((char) temp + 96);
+        }
+    }
+    return ans;
+}
+
+char *AtbashSequences(char *word, char *txt) {
+    char reverse1[strlen(word)];
+    char reverse2[strlen(word)];
+    char *result = calloc(1025, 1024);
+
+    char saveString[strlen(txt)];
+    int MC = 0;
+    memset(reverse1, 0, sizeof(reverse1));
+    memset(reverse2, 0, sizeof(reverse2));
+    memset(result, 0, sizeof(result));
+    memset(saveString, 0, sizeof(saveString));
+    int i = 0;
+    while (word[i] != '\0') {
+        char saveHere = reverseChar(word[i]);
+        strncat(reverse1, &saveHere, 1);
+        strncat(reverse2, &saveHere, 1);
+        i++;
+    }
+    strrev(reverse2);
+    outerloop:
+    for (int i = 0; i < strlen(txt); i++) {
+        if (txt[i] == '~') {
+            i = strlen(txt) - 1;
+            break;
+        }
+        if (txt[i] == reverse1[0]) {
+            strncat(saveString, &txt[i], 1);
+            int k = i;
+            for (int j = 1; j < strlen(reverse1); j++) {
+                k++;
+                if(txt[k]=='~'){
+                    break;
+                }
+                else if ((txt[k] == reverse1[j]) || (('a' > txt[k] || txt[k] > 'z') && ('A' > txt[k] || txt[k] > 'Z'))) {
+                    strncat(saveString, &txt[k], 1);
+                    if (strlen(reverse1) - 1 == j) {
+                        strncat(result, saveString, strlen(saveString));
+                        MC += strlen(saveString);
+                        memset(saveString, 0, sizeof(saveString));
+                        strncat(result, "~", 1);
+                        MC++;
+                    }
+
+                } else {
+                    memset(saveString, 0, sizeof(saveString));
+                    break;
+                }
+                if (('a' > txt[k] || txt[k] > 'z') && ('A' > txt[k] || txt[k] > 'Z')) {
+                    j = j - 1;
+                }
+            }
+        } else if (txt[i] == reverse2[0]) {
+            strncat(saveString, &txt[i], 1);            //xyz,   a0w xyzw
+            int k = i;
+            for (int j = 1; j < strlen(reverse2); j++) {
+                k++;
+                if(txt[k]=='~'){
+                    break;
+                }
+                else if ((txt[k] == reverse2[j]) || (('a' > txt[k] || txt[k] > 'z') && ('A' > txt[k] || txt[k] > 'Z'))) {
+                    strncat(saveString, &txt[k], 1);
+                    if (strlen(reverse2) - 1 == j) {
+                        strncat(result, saveString, strlen(saveString));
+                        MC += strlen(saveString);
+                        memset(saveString, 0, sizeof(saveString));
+                        strncat(result, "~", 1);
+                        MC++;
+                    }
+                } else {
+                    memset(saveString, 0, sizeof(saveString));
+                    break;
+                }
+                if (('a' > txt[k] || txt[k] > 'z') && ('A' > txt[k] || txt[k] > 'Z')) {
+                    j = j - 1;
+                }
+            }
+        }
+    }
+    result[MC - 1] = '\0';
     return result;
 }
 
+//------------------------------Q2--------------------------------------
 
 int main() {
 //    printf("%d\n", findMeTheValueOfTheChar('a'));
@@ -140,11 +235,19 @@ int main() {
                   "Head, shoulders, knees and toes,\n"
                   "Knees and toes.~";
 
-//    char result = GematriaSequences(word, txt);
-    char a[1025];
-    memset(a, 0, sizeof(a));
-    strcpy(a, GematriaSequences(word4, txt4));
-    printf("%s", a);
+    char word5[] = "abcd";
+    char txt5[] = "skldjahd312-z0yxw      -\n"
+                  "1=23 w1293 .. 21# xyzz wxy~z";
 
+//------------------------------Q1--------------------------------------
+//    char a[1025];
+//    memset(a, 0, sizeof(a));
+//    strcpy(a, GematriaSequences(word, txt));
+//    printf("%s", a);
+//------------------------------Q1--------------------------------------
+    char a2[1025];
+    memset(a2, 0, sizeof(a2));
+    strcpy(a2, AtbashSequences(word5, txt5));
+    printf("%s", a2);
     return 0;
 }
