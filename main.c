@@ -42,10 +42,8 @@ char *GematriaSequences(char *word, char *txt) {
     int MC = 0;
     memset(result, 0, sizeof(result));
     memset(saveString, 0, sizeof(saveString));
-    //cleanUpString(result);
-    //cleanUpString(saveString);
-    int count = 0;                     //012345678911234567892123456
-    for (int i = 0; i < txtLen; i++) { //a-bc,dbca-zwxyzabzyxw0dcba~
+    int count = 0;
+    for (int i = 0; i < txtLen; i++) {
         memset(saveString, 0, sizeof(saveString));
         for (int k = i; k < txtLen; k++) {
             if (txt[k] == '~') {
@@ -73,8 +71,6 @@ char *GematriaSequences(char *word, char *txt) {
                     strncat(result, &saveString[j], 1);
                     MC++;
                 }
-
-                //cleanUpString(saveString);
                 memset(saveString, 0, sizeof(saveString));
                 count = 0;
                 strncat(result, "~", 1);
@@ -82,7 +78,7 @@ char *GematriaSequences(char *word, char *txt) {
                 i++;
                 k = i - 1;
             } else if (count > sumOfWord) {
-                //cleanUpString(saveString);
+
                 memset(saveString, 0, sizeof(saveString));
                 count = 0;
                 i++;
@@ -257,8 +253,8 @@ int main() {
     char WORDinput[WORD];
     char copyWord[WORD];
     char TXTinput[TXT];
+    char txt;
     gets(WORDinput);
-    gets(TXTinput);
     int j=0;
     for (int i = 0; i < WORDinput; i++) {
         if(WORDinput[i]!=' ' && WORDinput[i]!= '\t' && WORDinput[i]!='\n'){
@@ -269,76 +265,88 @@ int main() {
             break;
         }
     }
-    printf("Gematria Sequences: ");
-    puts(GematriaSequences(copyWord,TXTinput));
-    printf("Atbash Sequences: ");
-    puts(AtbashSequences(copyWord,TXTinput));
-    printf("Anagram Sequences: ");
-    puts(AnagramSequences(copyWord,TXTinput));
-/*
+    for (int i = 0; i < TXTinput; i++) {
+        scanf("%c", &txt);
+        if(txt!='~'){
+            TXTinput[i] = txt;
+        }
+        else{
+            break;
+        }
+    }
+    printf("Gematria Sequences:");
+    printf("%*c",1,' ');
+    printf("%s\n",GematriaSequences(copyWord,TXTinput));
+    printf("Atbash Sequences:");
+    printf("%*c",1,' ');
+    printf("%s\n", AtbashSequences(copyWord,TXTinput));
+    printf("Anagram Sequences:");
+    printf("%*c",1,' ');
+    printf("%s", AnagramSequences(copyWord,TXTinput));
 
-    char word[] = "abcd";
-    char txt[] = "a-bc,dbca-zwxyzabzyxw0dcba~";
 
-    char word1[] = "fish";
-    char txt1[] = "One, two, three, four, five,\n"
-                  "Once I caught a fish alive,\n"
-                  "Six, seven, eight, nine, ten,\n"
-                  "Then I let go again.~";
-
-    char word2[] = "sea";
-    char txt2[] = "A sailor went to sea, sea, sea\n"
-                  "To see what he could see, see, see\n"
-                  "But all that he could see, see, see\n"
-                  "Was the bottom of the deep blue sea, sea, sea!~";
-
-    char word3[] = "sheep";
-    char txt3[] = "Baa, baa black sheep\n"
-                  "Have you any wool\n"
-                  "Yes sir, yes sir\n"
-                  "Three bags full.\n"
-                  "~\n"
-                  "One for my master\n"
-                  "And one for my dame\n"
-                  "And one for the little boy\n"
-                  "Who lives down the lane";
-
-    char word4[] = "Head";
-    char txt4[] = "Head, shoulders, knees and toes,\n"
-                  "Knees and toes.\n"
-                  "Head, shoulders, knees and toes,\n"
-                  "Knees and toes.\n"
-                  "And eyes, and ears, and mouth, and nose.\n"
-                  "Head, shoulders, knees and toes,\n"
-                  "Knees and toes.~";
-
-    char word5[] = "abcd";
-    char txt5[] = "skldjahd312-z0yxw      -\n"
-                  "1=23 w1293 .. 21# xyzz wxy~z";
-
+//    char word[] = "abcd";
+//    char txt[] = "a-bc,dbca-zwxyzabzyxw0dcba~";
+//
+//    char word1[] = "fish";
+//    char txt1[] = "One, two, three, four, five,\n"
+//                  "Once I caught a fish alive,\n"
+//                  "Six, seven, eight, nine, ten,\n"
+//                  "Then I let go again.~";
+//
+//    char word2[] = "sea";
+//    char txt2[] = "A sailor went to sea, sea, sea\n"
+//                  "To see what he could see, see, see\n"
+//                  "But all that he could see, see, see\n"
+//                  "Was the bottom of the deep blue sea, sea, sea!~";
+//
+//    char word3[] = "sheep";
+//    char txt3[] = "Baa, baa black sheep\n"
+//                  "Have you any wool\n"
+//                  "Yes sir, yes sir\n"
+//                  "Three bags full.\n"
+//                  "~\n"
+//                  "One for my master\n"
+//                  "And one for my dame\n"
+//                  "And one for the little boy\n"
+//                  "Who lives down the lane";
+//
+//    char word4[] = "Head";
+//    char txt4[] = "Head, shoulders, knees and toes,\n"
+//                  "Knees and toes.\n"
+//                  "Head, shoulders, knees and toes,\n"
+//                  "Knees and toes.\n"
+//                  "And eyes, and ears, and mouth, and nose.\n"
+//                  "Head, shoulders, knees and toes,\n"
+//                  "Knees and toes.~";
+//
+//    char word5[] = "abcd";
+//    char txt5[] = "skldjahd312-z0yxw      -\n"
+//                  "1=23 w1293 .. 21# xyzz wxy~z";
+//
 
 //------------------------------Q1--------------------------------------
-    char a[1025];
-    memset(a, 0, sizeof(a));
-    strcpy(a, GematriaSequences(word, txt));
-    printf("%s\n", a);
+//    char a[1025];
+//    memset(a, 0, sizeof(a));
+//    strcpy(a, GematriaSequences(word1, txt1));
+//    printf("%s\n", a);
 //------------------------------Q1--------------------------------------
 
 //------------------------------Q2--------------------------------------
-    char a2[1025];
-    memset(a2, 0, sizeof(a2));
-    strcpy(a2, AtbashSequences(word5, txt5));
-    printf("%s\n", a2);
+//    char a2[1025];
+//    memset(a2, 0, sizeof(a2));
+//    strcpy(a2, AtbashSequences(word5, txt5));
+//    printf("%s\n", a2);
 //------------------------------Q2--------------------------------------
 
 //------------------------------Q3--------------------------------------
-    char a3[1025];
-    memset(a3, 0, sizeof(a3));
-    strcpy(a3, AnagramSequences(word5, txt5));
-    printf("%s\n", a3);
+//    char a3[1025];
+//    memset(a3, 0, sizeof(a3));
+//    strcpy(a3, AnagramSequences(word5, txt5));
+//    printf("%s\n", a3);
 //------------------------------Q3--------------------------------------
 
-*/
+
 
     return 0;
 }
