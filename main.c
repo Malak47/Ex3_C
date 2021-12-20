@@ -1,6 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+
 #define TXT 1024
 #define WORD 30
 
@@ -37,7 +38,7 @@ char *GematriaSequences(char *word, char *txt) {
     int sumOfWord = findMeTheValueOfTheString(word);
     int txtLen;
     txtLen = strlen(txt);
-    char *result = calloc(TXT+1, TXT);
+    char *result = calloc(TXT + 1, TXT);
     char saveString[txtLen];
     int MC = 0;
     memset(result, 0, sizeof(result));
@@ -107,14 +108,12 @@ char reverseChar(char ch) {
 }
 
 
-char *strrev(char *str)
-{
+char *strrev(char *str) {
     char *ptr1, *ptr2;
 
-    if (! str || ! *str)
+    if (!str || !*str)
         return str;
-    for (ptr1 = str, ptr2 = str + strlen(str) - 1; ptr2 > ptr1; ++ptr1, --ptr2)
-    {
+    for (ptr1 = str, ptr2 = str + strlen(str) - 1; ptr2 > ptr1; ++ptr1, --ptr2) {
         *ptr1 ^= *ptr2;
         *ptr2 ^= *ptr1;
         *ptr1 ^= *ptr2;
@@ -125,7 +124,7 @@ char *strrev(char *str)
 char *AtbashSequences(char *word, char *txt) {
     char reverse1[strlen(word)];
     char reverse2[strlen(word)];
-    char *result = calloc(TXT+1, TXT);
+    char *result = calloc(TXT + 1, TXT);
 
     char saveString[strlen(txt)];
     int MC = 0;
@@ -207,7 +206,7 @@ char *AtbashSequences(char *word, char *txt) {
 //------------------------------Q3--------------------------------------
 char *AnagramSequences(char *word, char *txt) {
     int txtLen = strlen(txt);
-    char *result = calloc(TXT+1, TXT);
+    char *result = calloc(TXT + 1, TXT);
     char saveString[txtLen];
     int MC = 0;
     memset(result, 0, sizeof(result));
@@ -255,39 +254,38 @@ int main() {
     char TXTinput[TXT];
     char txt;
     gets(WORDinput);
-    int j=0;
+    int j = 0;
     for (int i = 0; i < WORDinput; i++) {
-        if(WORDinput[i]!=' ' && WORDinput[i]!= '\t' && WORDinput[i]!='\n'){
+        if (WORDinput[i] != ' ' && WORDinput[i] != '\t' && WORDinput[i] != '\n') {
             copyWord[j] = WORDinput[i];
             j++;
-        }
-        else{
+        } else {
             break;
         }
     }
     for (int i = 0; i < TXTinput; i++) {
         scanf("%c", &txt);
-        if(txt!='~'){
+        if (txt != '~') {
             TXTinput[i] = txt;
-        }
-        else{
+        } else {
+            TXTinput[i] = txt;
             break;
         }
     }
     printf("Gematria Sequences:");
-    printf("%*c",1,' ');
-    printf("%s\n",GematriaSequences(copyWord,TXTinput));
+    printf("%*c", 1, ' ');
+    printf("%s\n", GematriaSequences(copyWord, TXTinput));
     printf("Atbash Sequences:");
-    printf("%*c",1,' ');
-    printf("%s\n", AtbashSequences(copyWord,TXTinput));
+    printf("%*c", 1, ' ');
+    printf("%s\n", AtbashSequences(copyWord, TXTinput));
     printf("Anagram Sequences:");
-    printf("%*c",1,' ');
-    printf("%s", AnagramSequences(copyWord,TXTinput));
+    printf("%*c", 1, ' ');
+    printf("%s", AnagramSequences(copyWord, TXTinput));
 
 
-//    char word[] = "abcd";
-//    char txt[] = "a-bc,dbca-zwxyzabzyxw0dcba~";
-//
+    char word0[] = "abcd";
+    char txt0[] = "a-bc,dbca-zwxyzabzyxw0dcba~";
+
 //    char word1[] = "fish";
 //    char txt1[] = "One, two, three, four, five,\n"
 //                  "Once I caught a fish alive,\n"
@@ -328,7 +326,7 @@ int main() {
 //------------------------------Q1--------------------------------------
 //    char a[1025];
 //    memset(a, 0, sizeof(a));
-//    strcpy(a, GematriaSequences(word1, txt1));
+//    strcpy(a, GematriaSequences(word0, txt0));
 //    printf("%s\n", a);
 //------------------------------Q1--------------------------------------
 
@@ -345,8 +343,6 @@ int main() {
 //    strcpy(a3, AnagramSequences(word5, txt5));
 //    printf("%s\n", a3);
 //------------------------------Q3--------------------------------------
-
-
 
     return 0;
 }
