@@ -110,6 +110,22 @@ char reverseChar(char ch) {
     return ans;
 }
 
+
+char *strrev(char *str)
+{
+    char *ptr1, *ptr2;
+
+    if (! str || ! *str)
+        return str;
+    for (ptr1 = str, ptr2 = str + strlen(str) - 1; ptr2 > ptr1; ++ptr1, --ptr2)
+    {
+        *ptr1 ^= *ptr2;
+        *ptr2 ^= *ptr1;
+        *ptr1 ^= *ptr2;
+    }
+    return str;
+}
+
 char *AtbashSequences(char *word, char *txt) {
     char reverse1[strlen(word)];
     char reverse2[strlen(word)];
@@ -160,7 +176,7 @@ char *AtbashSequences(char *word, char *txt) {
                 }
             }
         } else if (txt[i] == reverse2[0]) {
-            strncat(saveString, &txt[i], 1);            //xyz,   a0w xyzw
+            strncat(saveString, &txt[i], 1);
             int k = i;
             for (int j = 1; j < strlen(reverse2); j++) {
                 k++;
@@ -260,6 +276,7 @@ int main() {
     printf("Anagram Sequences: ");
     puts(AnagramSequences(copyWord,TXTinput));
 /*
+
     char word[] = "abcd";
     char txt[] = "a-bc,dbca-zwxyzabzyxw0dcba~";
 
@@ -320,6 +337,7 @@ int main() {
     strcpy(a3, AnagramSequences(word5, txt5));
     printf("%s\n", a3);
 //------------------------------Q3--------------------------------------
+
 */
 
     return 0;
