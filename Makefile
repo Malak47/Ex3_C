@@ -13,4 +13,4 @@ main.o: main.c
 .phony: clean
 
 clean:
-	del -fr *.a *.o stringProg
+	rm *.a *.o stringProg
